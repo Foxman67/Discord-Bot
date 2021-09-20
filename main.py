@@ -16,8 +16,12 @@ class IDC(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-   # @commands.command()
-    #async def add_ID(self,ctx,game,ID):
+    @commands.command()
+    async def add_ID(self,ctx,game,ID):
+
+        #what do i need, game, pokeid, pokemon(?) box-probably, boxpos(?)?
+        #how to gather this data
+
 
 
 
