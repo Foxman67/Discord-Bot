@@ -11,6 +11,9 @@ async def on_ready():
 
 
 class IDC(commands.Cog):
+    PATH = os.getcwd()+"/profile"
+    FILENAME = "{0}.json"
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -22,9 +25,14 @@ class IDC(commands.Cog):
         # dictionary for user games, games keys game abbreviations, those key lists
         # write to file, do not append
         user = ctx.author.id
-        print("running command")
-        if not os.path.isfile("{0}.json".format(user)):
+        path = os.path.join(self.PATH, self.FILENAME.format(user))
+
+        if not os.path.isfile(path):
             # create json format
+
+            if not os.path.isdir(self.PATH):
+                os.mkdir(self.PATH)
+
             file = {
                 "user": "{0}".format(ctx.author),
                 "games": {
@@ -43,8 +51,8 @@ class IDC(commands.Cog):
                 }
             }
         else:
-            # open file
-            f = open("{0}.json".format(user), "r")
+
+            f = open(path, "r")
             x = f.read()
             file = json.loads(x)
             f.close()
@@ -70,12 +78,25 @@ class IDC(commands.Cog):
                     bank.append(ID)
                     edit[game] = bank
                     file["games"] = edit
-                    f = open("{0}.json".format(user), "w")
+                    f = open(path, "w")
                     f.write(json.dumps(file))
                     f.close()
                     await ctx.reply("added id to profile")
             else:
                 await ctx.reply("invalid id")
+
+    @commands.group()
+    async def delete(self, ctx):
+        if ctx.invoked_subcommand is None:
+            await ctx.reply("please specify with adding the following")
+            await ctx.send("```profile\nid\ngame ```")
+
+    @delete.command()
+    async def profile(self, ctx):
+        await ctx.reply("This cannot be undone! are you sure? y/n")
+             msg = await bot.wait_for('message', check=check)
+            if msg.content.
+
 
 
 # add bot token
