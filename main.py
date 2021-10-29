@@ -93,9 +93,15 @@ class IDC(commands.Cog):
 
     @delete.command()
     async def profile(self, ctx):
+        def check(user):
+            return user == ctx.message().author()
+
         await ctx.reply("This cannot be undone! are you sure? y/n")
-             msg = await bot.wait_for('message', check=check)
-            if msg.content.
+        msg = await bot.wait_for('message', check=check)
+        if msg.content.lowercase() == "yes":
+            await ctx.reply("deleting data...")
+            os.remove(os.path.join(self.PATH, self.FILENAME.format(ctx.author.id)))
+
 
 
 
